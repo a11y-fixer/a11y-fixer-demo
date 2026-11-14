@@ -10,7 +10,7 @@
       <!-- VIOLATION (button-name / WCAG 4.1.2): icon-only menu button has no
            accessible name (the SVG is aria-hidden, no text). ButtonNameFixer
            adds an aria-label. -->
-      <button class="menu-toggle"><svg width="24" height="24" aria-hidden="true"><use href="#icon-menu" /></svg></button>
+      <button aria-label="Toggle navigation menu" class="menu-toggle"><svg width="24" height="24" aria-hidden="true"><use href="#icon-menu" /></svg></button>
       <nav aria-label="Primary">
         <a href="index.html">Home</a>
         <a href="pricing.html">Pricing</a>
@@ -21,7 +21,7 @@
     <main>
       <!-- VIOLATION (image-alt / WCAG 1.1.1): hero image has no alt text.
            AltTextFixer adds a descriptive alt. -->
-      <img class="hero" src="/images/dashboard-hero.png" width="960" height="420" />
+      <img alt="Dashboard interface displaying various metrics and analytics data in a unified view" class="hero" src="/images/dashboard-hero.png" width="960" height="420" />
 
       <h1>See every metric that matters, in one place</h1>
       <p>
@@ -36,7 +36,7 @@
       <ul class="social">
         <!-- VIOLATION (link-name / WCAG 2.4.4): icon-only social links have no
              accessible name. LinkNameFixer adds an aria-label. -->
-        <li><a href="https://twitter.com/northwind"><svg width="20" height="20" aria-hidden="true"><use href="#icon-twitter" /></svg></a></li>
+        <li><a aria-label="Visit Northwind on Twitter" href="https://twitter.com/northwind"><svg width="20" height="20" aria-hidden="true"><use href="#icon-twitter" /></svg></a></li>
         <li><a href="https://github.com/northwind"><svg width="20" height="20" aria-hidden="true"><use href="#icon-github" /></svg></a></li>
       </ul>
     </footer>
