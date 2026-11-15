@@ -1,11 +1,17 @@
 name: Deploy demo site to Pages
 
-# Publishes the static HTML site (site-html/) to GitHub Pages so you can view
-# the deliberately-broken "before" site in a browser. One-time setup: in the
-# demo repo, Settings → Pages → Build and deployment → Source = "GitHub Actions".
+# Publishes the deliberately-broken "before" demo so you can view it in a
+# browser. One-time setup: Settings → Pages → Build and deployment →
+# Source = "GitHub Actions".
+#
+# Two sub-sites are published:
+#   /html/ — the static HTML site (site-html/), served as-is.
+#   /jsx/  — the React fixture (site-jsx/App.tsx), rendered client-side via
+#            Babel-standalone so there's no build toolchain to maintain.
+# A small landing page at / links both.
 #
 # This serves whatever is on main — the broken site. The a11y-fixer Action opens
-# its fixes as PRs and never pushes to main, so the hosted page stays broken
+# its fixes as PRs and never pushes to main, so the hosted pages stay broken
 # until you merge a fix PR (handy for before/after).
 on:
   push:
@@ -30,11 +36,90 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Assemble site
+        run: |
+          set -euo pipefail
+          mkdir -p _site/html _site/jsx
+
+          # Static HTML site, verbatim.
+          cp -r site-html/. _site/html/
+
+          # JSX fixture: ship the raw App.tsx plus a viewer that transpiles and
+          # renders it in the browser. Keeps the published page identical to the
+          # exact source the scanner reads — no divergent build output.
+          cp -r site-jsx/. _site/jsx/
+          cat > _site/jsx/index.html <<'HTML'
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <title>a11y-fixer demo — JSX (before)</title>
+            </head>
+            <body>
+              <div id="root"></div>
+              <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+              <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+              <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+              <script>
+                (async () => {
+                  const src = await (await fetch('./App.tsx')).text();
+                  const { code } = Babel.transform(src, {
+                    filename: 'App.tsx',
+                    presets: ['typescript', ['react', { runtime: 'classic' }]],
+                    plugins: ['transform-modules-commonjs'],
+                  });
+                  const module = { exports: {} };
+                  const require = (name) => {
+                    if (name === 'react') return React;
+                    throw new Error('Unexpected import: ' + name);
+                  };
+                  new Function('module', 'exports', 'require', 'React', code)(
+                    module, module.exports, require, React
+                  );
+                  const App = module.exports.default;
+                  ReactDOM.createRoot(document.getElementById('root')).render(
+                    React.createElement(App)
+                  );
+                })();
+              </script>
+            </body>
+          </html>
+          HTML
+
+          # Landing page linking both sub-sites.
+          cat > _site/index.html <<'HTML'
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <title>a11y-fixer demo</title>
+              <style>
+                body { font: 16px/1.5 system-ui, sans-serif; max-width: 42rem; margin: 3rem auto; padding: 0 1rem; }
+                h1 { margin-bottom: 0.25rem; }
+                p.sub { color: #555; margin-top: 0; }
+                ul { list-style: none; padding: 0; }
+                li { margin: 0.75rem 0; }
+                a { font-weight: 600; }
+              </style>
+            </head>
+            <body>
+              <h1>a11y-fixer demo</h1>
+              <p class="sub">Two deliberately-broken sites the Action scans and fixes (via PR).</p>
+              <ul>
+                <li><a href="./html/">Static HTML site</a> — scanned by the axe-core path.</li>
+                <li><a href="./jsx/">React (JSX) page</a> — scanned by the ESLint + jsx-a11y path.</li>
+              </ul>
+              <p class="sub">These are the "before" versions. Merge a fix PR to see "after".</p>
+            </body>
+          </html>
+          HTML
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          # Only the static HTML site is a real web page; site-jsx/ is a source
-          # fixture for the scanner, not a built app.
-          path: site-html
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
