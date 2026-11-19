@@ -1,10 +1,10 @@
-// Added by the Phase 1 dogfood PR: a deliberately inaccessible promo banner.
-// The check-mode Action should annotate the <img> line inline on this diff
-// (jsx-a11y/alt-text, WCAG 1.1.1) and leave one sticky summary comment.
+// Second revision: fix the img (add alt), but add a NEW empty anchor so the
+// check still reports — proving the sticky comment updates in place.
 export default function Promo() {
   return (
     <section>
-      <img src="/promo-banner.png" width="320" height="120" />
+      <img src="/promo-banner.png" alt="Spring promo" width="320" height="120" />
+      <a href="/promo"></a>
     </section>
   );
 }
