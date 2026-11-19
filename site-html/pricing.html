@@ -8,7 +8,7 @@
   <body>
     <header>
       <!-- VIOLATION (button-name / WCAG 4.1.2): icon-only menu button. -->
-      <button class="menu-toggle"><svg width="24" height="24" aria-hidden="true"><use href="#icon-menu" /></svg></button>
+      <button aria-label="Toggle navigation menu" class="menu-toggle"><svg aria-label="Toggle navigation menu" width="24" height="24" aria-hidden="true"><use href="#icon-menu" /></svg></button>
       <nav aria-label="Primary">
         <a href="index.html">Home</a>
         <a href="pricing.html">Pricing</a>
@@ -20,7 +20,7 @@
       <h1>Simple, usage-based pricing</h1>
 
       <!-- VIOLATION (image-alt / WCAG 1.1.1): comparison chart has no alt. -->
-      <img class="plans" src="/images/plan-comparison.png" width="800" height="300" />
+      <img alt="Comparison chart of subscription plans showing features and pricing across different tiers" class="plans" src="/images/plan-comparison.png" width="800" height="300" />
 
       <section>
         <h2>Team</h2>
@@ -33,23 +33,23 @@
         <img src="/images/regions.png" width="400" height="200" alt="Service regions" usemap="#regions" />
         <map name="regions">
           <!-- VIOLATION (area-alt / WCAG 1.1.1): image-map area with no alt. -->
-          <area shape="rect" coords="0,0,200,200" href="pricing.html#west" />
+          <area alt="West region pricing" shape="rect" coords="0,0,200,200" href="pricing.html#west" />
         </map>
 
         <!-- VIOLATION (object-alt / WCAG 1.1.1): embedded object with no text alternative. -->
-        <object data="/files/pricing-sheet.pdf" type="application/pdf" width="400" height="300"></object>
+        <object aria-label="Pricing sheet PDF document" data="/files/pricing-sheet.pdf" type="application/pdf" width="400" height="300"></object>
 
         <!-- VIOLATION (svg-img-alt / WCAG 1.1.1): graphic svg exposed as an image with no name. -->
         <svg role="img" width="120" height="40"><rect width="120" height="40" fill="#4f46e5" /></svg>
 
         <!-- VIOLATION (aria-command-name / WCAG 4.1.2): role=button with no accessible name. -->
-        <div role="button" tabindex="0" class="icon-expand"></div>
+        <div aria-label="Expand" role="button" tabindex="0" class="icon-expand"></div>
 
         <!-- VIOLATION (aria-input-field-name / WCAG 4.1.2): role=textbox with no accessible name. -->
-        <div role="textbox" contenteditable="true" class="note-field"></div>
+        <div aria-label="Note input field" role="textbox" contenteditable="true" class="note-field"></div>
 
         <!-- VIOLATION (aria-toggle-field-name / WCAG 4.1.2): role=switch with no accessible name. -->
-        <div role="switch" tabindex="0" aria-checked="false" class="billing-toggle"></div>
+        <div aria-label="Toggle billing frequency" role="switch" tabindex="0" aria-checked="false" class="billing-toggle"></div>
       </section>
     </main>
 
@@ -57,7 +57,7 @@
       <p>&copy; 2026 Northwind Analytics, Inc.</p>
       <ul class="social">
         <!-- VIOLATION (link-name / WCAG 2.4.4): icon-only social links. -->
-        <li><a href="https://twitter.com/northwind"><svg width="20" height="20" aria-hidden="true"><use href="#icon-twitter" /></svg></a></li>
+        <li><a aria-label="Follow Northwind on Twitter" href="https://twitter.com/northwind"><svg width="20" height="20" aria-hidden="true"><use href="#icon-twitter" /></svg></a></li>
         <li><a href="https://github.com/northwind"><svg width="20" height="20" aria-hidden="true"><use href="#icon-github" /></svg></a></li>
       </ul>
     </footer>
