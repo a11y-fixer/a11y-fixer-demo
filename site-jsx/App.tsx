@@ -1,3 +1,4 @@
+// m2 go-live check: trigger a11y-fixer check-run (throwaway)
 // Minimal React page scanned via the default JSX path (ESLint + jsx-a11y).
 //
 // This path exists to show LinkTextFixer (WCAG 2.4.4), which the static-HTML
