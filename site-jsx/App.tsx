@@ -10,7 +10,7 @@ export default function App() {
   return (
     <main>
       {/* VIOLATION (jsx-a11y/alt-text / WCAG 1.1.1): AltTextFixer adds an alt. */}
-      <img className="avatar" src="/avatar.png" width="64" height="64" />
+      <img alt="User avatar profile picture" className="avatar" src="/avatar.png" width="64" height="64" />
 
       <h1>Your account</h1>
 
