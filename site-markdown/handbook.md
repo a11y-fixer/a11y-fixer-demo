@@ -2,15 +2,15 @@
 
 Welcome to the handbook. Our logo:
 
-![](logo.png)
+![Welcome to the handbook logo](logo.png)
 
 ## Getting started
 
-For onboarding steps, [click here](/onboarding). You can also read the
-benefits overview — [here](/benefits).
+For onboarding steps, [start the onboarding process](/onboarding). You can also read the
+benefits overview — [View the benefits overview](/benefits).
 
 New hires should review the full policy at
-[https://example.com/policies](https://example.com/policies).
+[New hires should review the full policy at \[company policies\](https://example.com/policies).](https://example.com/policies).
 
 ## Already accessible
 
