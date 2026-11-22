@@ -49,7 +49,7 @@ jobs:
       - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: .a11y-fixer-cache.json
-          key: a11y-fixer-ai-html-${{ hashFiles('site-html/**') }}
+          key: a11y-fixer-ai-html-v2-${{ hashFiles('site-html/**') }}
 
       - uses: a11y-fixer/a11y-fixer@v1
         with:
